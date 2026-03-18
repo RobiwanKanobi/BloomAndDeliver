@@ -34,32 +34,114 @@ func _ready() -> void:
 
 
 func _load_databases() -> void:
-	var flower_ids := ["daisy_yellow", "daisy_white", "tulip_pink", "wildflower_yellow"]
-	for fid in flower_ids:
-		var res = load("res://resources/flowers/%s.tres" % fid)
-		if res:
-			flowers_db[fid] = res
-
-	var customer_ids := ["florist_mentor", "red_fox", "white_tailed_deer"]
-	for cid in customer_ids:
-		var res = load("res://resources/customers/%s.tres" % cid)
-		if res:
-			customers_db[cid] = res
-
-	var order_ids := ["order_01_red_fox", "order_02_deer", "order_03_mentor"]
-	for oid in order_ids:
-		var res = load("res://resources/orders/%s.tres" % oid)
-		if res:
-			orders_db[oid] = res
-
-	var location_ids := ["flower_shop", "fox_house", "deer_house", "town_square", "player_home"]
-	for lid in location_ids:
-		var res = load("res://resources/locations/%s.tres" % lid)
-		if res:
-			locations_db[lid] = res
-
-	demo_order_queue = order_ids.duplicate()
+	_create_flowers()
+	_create_customers()
+	_create_locations()
+	_create_orders()
+	demo_order_queue = ["order_01_red_fox", "order_02_deer", "order_03_mentor"]
 	demo_order_index = 0
+
+
+func _create_flowers() -> void:
+	var data := [
+		["daisy_yellow", "Yellow Daisy", "Daisy", "Yellow", 10, "A cheerful yellow daisy."],
+		["daisy_white", "White Daisy", "Daisy", "White", 10, "A soft white daisy."],
+		["tulip_pink", "Pink Tulip", "Tulip", "Pink", 15, "A lovely pink tulip."],
+		["wildflower_yellow", "Yellow Wildflower", "Wildflower", "Yellow", 8, "A wild yellow flower."],
+	]
+	for d in data:
+		var f := FlowerData.new()
+		f.id = d[0]
+		f.display_name = d[1]
+		f.flower_type = d[2]
+		f.color_tag = d[3]
+		f.base_value = d[4]
+		f.description = d[5]
+		flowers_db[f.id] = f
+
+
+func _create_customers() -> void:
+	var data := [
+		["florist_mentor", "Florist Mentor", "Mentor", "town_square"],
+		["red_fox", "Red Fox", "Customer", "fox_house"],
+		["white_tailed_deer", "White-Tailed Deer", "Customer", "deer_house"],
+	]
+	for d in data:
+		var c := CustomerData.new()
+		c.id = d[0]
+		c.display_name = d[1]
+		c.role = d[2]
+		c.default_location_id = d[3]
+		customers_db[c.id] = c
+
+
+func _create_locations() -> void:
+	var data := [
+		["flower_shop", "Flower Shop", Vector2(960, 600), "Your cozy flower shop."],
+		["fox_house", "Fox House", Vector2(400, 300), "Red Fox's warm burrow."],
+		["deer_house", "Deer House", Vector2(1500, 300), "White-Tailed Deer's clearing."],
+		["town_square", "Town Square", Vector2(960, 350), "The bustling center of town."],
+		["player_home", "Home", Vector2(960, 800), "Your cozy home."],
+	]
+	for d in data:
+		var l := LocationData.new()
+		l.id = d[0]
+		l.display_name = d[1]
+		l.world_position = d[2]
+		l.description = d[3]
+		locations_db[l.id] = l
+
+
+func _create_orders() -> void:
+	var req1a := OrderRequirementData.new()
+	req1a.requirement_type = "ColorTag"
+	req1a.target_value = "Yellow"
+	req1a.amount = 1
+	var req1b := OrderRequirementData.new()
+	req1b.requirement_type = "FlowerType"
+	req1b.target_value = "Daisy"
+	req1b.amount = 1
+	var o1 := OrderData.new()
+	o1.id = "order_01_red_fox"
+	o1.customer_id = "red_fox"
+	o1.request_text = "I need a cheerful bouquet with at least one yellow flower and one daisy."
+	o1.requirements = [req1a, req1b]
+	o1.reward_money = 30
+	o1.reward_reputation = 1
+	o1.destination_location_id = "fox_house"
+	orders_db[o1.id] = o1
+
+	var req2a := OrderRequirementData.new()
+	req2a.requirement_type = "ColorTag"
+	req2a.target_value = "White"
+	req2a.amount = 1
+	var req2b := OrderRequirementData.new()
+	req2b.requirement_type = "FlowerType"
+	req2b.target_value = "Daisy"
+	req2b.amount = 1
+	var o2 := OrderData.new()
+	o2.id = "order_02_deer"
+	o2.customer_id = "white_tailed_deer"
+	o2.request_text = "Could I have something soft and gentle? Please include at least one white flower and one daisy."
+	o2.requirements = [req2a, req2b]
+	o2.reward_money = 35
+	o2.reward_reputation = 1
+	o2.destination_location_id = "deer_house"
+	orders_db[o2.id] = o2
+
+	var req3a := OrderRequirementData.new()
+	req3a.requirement_type = "ColorTag"
+	req3a.target_value = "Pink"
+	req3a.amount = 1
+	var o3 := OrderData.new()
+	o3.id = "order_03_mentor"
+	o3.customer_id = "florist_mentor"
+	o3.request_text = "Let us keep it simple today. I would like one pink flower."
+	o3.requirements = [req3a]
+	o3.reward_money = 20
+	o3.reward_reputation = 1
+	o3.destination_location_id = "town_square"
+	orders_db[o3.id] = o3
 
 
 func reset_for_new_game() -> void:

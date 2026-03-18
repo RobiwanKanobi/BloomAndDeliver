@@ -9,6 +9,7 @@ var is_collected: bool = false
 
 @onready var _label: Label = $Label
 @onready var _color_rect: ColorRect = $ColorRect
+@onready var _button: Button = $Button if has_node("Button") else null
 
 
 func _ready() -> void:
@@ -21,6 +22,21 @@ func _ready() -> void:
 	input_event.connect(_on_input_event)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
+	set_process_input(true)
+	if _button:
+		_button.pressed.connect(collect)
+
+
+func _input(event: InputEvent) -> void:
+	if is_collected:
+		return
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var mouse_pos = get_global_mouse_position()
+		var rect = Rect2(global_position - Vector2(50, 50), Vector2(100, 100))
+		if rect.has_point(mouse_pos):
+			collect()
+			get_viewport().set_input_as_handled()
+
 
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:

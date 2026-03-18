@@ -40,6 +40,13 @@ color = Color(1, 0.9, 0.3, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSpots/FlowerSpot01"]
 shape = SubResource("shape1")
 
+[node name="Button" type="Button" parent="FlowerSpots/FlowerSpot01"]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+flat = true
+
 [node name="Label" type="Label" parent="FlowerSpots/FlowerSpot01"]
 offset_left = -70.0
 offset_top = 55.0
@@ -63,6 +70,13 @@ color = Color(1, 0.6, 0.7, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSpots/FlowerSpot02"]
 shape = SubResource("shape1")
+
+[node name="Button" type="Button" parent="FlowerSpots/FlowerSpot02"]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+flat = true
 
 [node name="Label" type="Label" parent="FlowerSpots/FlowerSpot02"]
 offset_left = -70.0
@@ -88,6 +102,13 @@ color = Color(0.95, 0.95, 0.95, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSpots/FlowerSpot03"]
 shape = SubResource("shape1")
 
+[node name="Button" type="Button" parent="FlowerSpots/FlowerSpot03"]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+flat = true
+
 [node name="Label" type="Label" parent="FlowerSpots/FlowerSpot03"]
 offset_left = -70.0
 offset_top = 55.0
@@ -111,6 +132,13 @@ color = Color(1, 0.9, 0.3, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSpots/FlowerSpot04"]
 shape = SubResource("shape1")
+
+[node name="Button" type="Button" parent="FlowerSpots/FlowerSpot04"]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+flat = true
 
 [node name="Label" type="Label" parent="FlowerSpots/FlowerSpot04"]
 offset_left = -70.0
