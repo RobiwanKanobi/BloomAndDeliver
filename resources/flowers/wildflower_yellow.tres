@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FlowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/FlowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "wildflower_yellow"
+display_name = "Yellow Wildflower"
+flower_type = "Wildflower"
+color_tag = "Yellow"
+base_value = 8
+description = "A wild yellow flower with a natural charm."

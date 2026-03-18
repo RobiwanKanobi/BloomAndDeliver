@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FlowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/FlowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "daisy_yellow"
+display_name = "Yellow Daisy"
+flower_type = "Daisy"
+color_tag = "Yellow"
+base_value = 10
+description = "A cheerful yellow daisy that brightens any bouquet."

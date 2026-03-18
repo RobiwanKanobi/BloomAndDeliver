@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LocationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/LocationData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "town_square"
+display_name = "Town Square"
+world_position = Vector2(960, 350)
+description = "The bustling center of town."

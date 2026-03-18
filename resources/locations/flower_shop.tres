@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LocationData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/LocationData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "flower_shop"
+display_name = "Flower Shop"
+world_position = Vector2(960, 600)
+description = "Your cozy flower shop in the heart of town."

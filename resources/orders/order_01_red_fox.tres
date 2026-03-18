@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="OrderData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/OrderData.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/data/OrderRequirementData.gd" id="2"]
+
+[sub_resource type="Resource" id="req1"]
+script = ExtResource("2")
+requirement_type = "ColorTag"
+target_value = "Yellow"
+amount = 1
+
+[sub_resource type="Resource" id="req2"]
+script = ExtResource("2")
+requirement_type = "FlowerType"
+target_value = "Daisy"
+amount = 1
+
+[resource]
+script = ExtResource("1")
+id = "order_01_red_fox"
+customer_id = "red_fox"
+request_text = "I need a cheerful bouquet with at least one yellow flower and one daisy."
+requirements = [SubResource("req1"), SubResource("req2")]
+reward_money = 30
+reward_reputation = 1
+destination_location_id = "fox_house"
