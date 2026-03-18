@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FlowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/FlowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "tulip_pink"
+display_name = "Pink Tulip"
+flower_type = "Tulip"
+color_tag = "Pink"
+base_value = 15
+description = "A lovely pink tulip, elegant and refined."

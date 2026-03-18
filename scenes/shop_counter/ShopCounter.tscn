@@ -1,0 +1,158 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/gameplay/ShopCounter.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/backgrounds/shop_counter_background.png" id="2"]
+
+[node name="ShopCounter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 400.0
+offset_bottom = 40.0
+text = "~ Shop Counter ~"
+
+[node name="MainLayout" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = -20.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="LeftColumn" type="VBoxContainer" parent="MainLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 10
+
+[node name="CustomerPortrait" type="TextureRect" parent="MainLayout/LeftColumn"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 200)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CustomerLabel" type="Label" parent="MainLayout/LeftColumn"]
+layout_mode = 2
+text = "Customer:"
+
+[node name="CustomerNameLabel" type="Label" parent="MainLayout/LeftColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Loading..."
+
+[node name="Spacer1" type="Control" parent="MainLayout/LeftColumn"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 10)
+
+[node name="OrderLabel" type="Label" parent="MainLayout/LeftColumn"]
+layout_mode = 2
+text = "Order:"
+
+[node name="OrderTextLabel" type="Label" parent="MainLayout/LeftColumn"]
+layout_mode = 2
+autowrap_mode = 2
+text = "Loading order..."
+
+[node name="CenterColumn" type="VBoxContainer" parent="MainLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+theme_override_constants/separation = 10
+
+[node name="BouquetLabel" type="Label" parent="MainLayout/CenterColumn"]
+layout_mode = 2
+text = "Your Bouquet:"
+horizontal_alignment = 1
+
+[node name="BouquetSlots" type="HBoxContainer" parent="MainLayout/CenterColumn"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="RightColumn" type="VBoxContainer" parent="MainLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 10
+
+[node name="InventoryTitle" type="Label" parent="MainLayout/RightColumn"]
+layout_mode = 2
+text = "Your Flowers:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainLayout/RightColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InventoryList" type="VBoxContainer" parent="MainLayout/RightColumn/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="BottomRow" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="BackButton" type="Button" parent="BottomRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 50)
+text = "Back"
+
+[node name="ClearButton" type="Button" parent="BottomRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 50)
+text = "Clear Bouquet"
+
+[node name="FeedbackLabel" type="Label" parent="BottomRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add flowers to your bouquet."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="BottomRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(180, 50)
+disabled = true
+text = "Confirm Bouquet"
+
+[node name="TownMapButton" type="Button" parent="BottomRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(180, 50)
+text = "Go to Town Map"
