@@ -42,6 +42,11 @@ func _setup_locations() -> void:
 		if btn:
 			var lid = location_id
 			btn.pressed.connect(func(): _on_location_button_pressed(lid))
+			var icon_path := "res://assets/art/icons/%s_marker.png" % location_id
+			if ResourceLoader.exists(icon_path):
+				btn.icon = load(icon_path)
+				btn.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+				btn.expand_icon = true
 		var is_target = (location_id == GameState.current_delivery_target_id)
 		_style_location_node(loc_node, location_id, is_target)
 

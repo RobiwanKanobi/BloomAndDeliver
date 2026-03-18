@@ -1,5 +1,6 @@
 extends Control
 
+@onready var _customer_portrait: TextureRect = $MainLayout/LeftColumn/CustomerPortrait
 @onready var _customer_name_label: Label = $MainLayout/LeftColumn/CustomerNameLabel
 @onready var _order_text_label: Label = $MainLayout/LeftColumn/OrderTextLabel
 @onready var _bouquet_container: HBoxContainer = $MainLayout/CenterColumn/BouquetSlots
@@ -41,6 +42,9 @@ func _load_order() -> void:
 		var customer = GameState.customers_db.get(_current_order.customer_id)
 		_customer_name_label.text = customer.display_name if customer else _current_order.customer_id
 		_order_text_label.text = _current_order.request_text
+		var portrait_path := "res://assets/art/characters/%s_portrait.png" % _current_order.customer_id
+		if ResourceLoader.exists(portrait_path):
+			_customer_portrait.texture = load(portrait_path)
 	else:
 		_customer_name_label.text = "No customer"
 		_order_text_label.text = "No orders available."

@@ -10,9 +10,18 @@ var is_collected: bool = false
 @onready var _label: Label = $Label
 @onready var _color_rect: ColorRect = $ColorRect
 @onready var _button: Button = $Button if has_node("Button") else null
+var _icon_sprite: Sprite2D
+
+const FLOWER_ICON_MAP := {
+	"daisy_yellow": "yellow_daisy_icon",
+	"daisy_white": "white_daisy_icon",
+	"tulip_pink": "pink_tulip_icon",
+	"wildflower_yellow": "yellow_wildflower_icon",
+}
 
 
 func _ready() -> void:
+	_load_flower_icon()
 	if _label and flower_id != "":
 		var flower = GameState.flowers_db.get(flower_id)
 		if flower:
@@ -25,6 +34,20 @@ func _ready() -> void:
 	set_process_input(true)
 	if _button:
 		_button.pressed.connect(collect)
+
+
+func _load_flower_icon() -> void:
+	var icon_name = FLOWER_ICON_MAP.get(flower_id, "")
+	if icon_name == "":
+		return
+	var icon_path := "res://assets/art/flowers/%s.png" % icon_name
+	if ResourceLoader.exists(icon_path):
+		_icon_sprite = Sprite2D.new()
+		_icon_sprite.texture = load(icon_path)
+		_icon_sprite.scale = Vector2(0.1, 0.1)
+		add_child(_icon_sprite)
+		if _color_rect:
+			_color_rect.visible = false
 
 
 func _input(event: InputEvent) -> void:
@@ -63,6 +86,8 @@ func collect() -> void:
 	GameState.add_flower(flower_id, quantity)
 	GameState.flowers_collected_today += 1
 	flower_collected.emit(flower_id, quantity)
+	if _icon_sprite:
+		_icon_sprite.modulate.a = 0.3
 	if _color_rect:
 		_color_rect.modulate.a = 0.3
 	if _label:
