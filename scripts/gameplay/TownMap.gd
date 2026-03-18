@@ -38,34 +38,31 @@ func _setup_locations() -> void:
 		if location_id == "":
 			continue
 		_location_nodes[location_id] = loc_node
-		var area: Area2D = loc_node.get_node_or_null("Area2D")
-		if area:
+		var btn: Button = loc_node.get_node_or_null("ClickButton")
+		if btn:
 			var lid = location_id
-			area.input_event.connect(func(_vp, event, _idx): _on_location_clicked(lid, event))
+			btn.pressed.connect(func(): _on_location_button_pressed(lid))
 		var is_target = (location_id == GameState.current_delivery_target_id)
 		_style_location_node(loc_node, location_id, is_target)
 
 
 func _style_location_node(loc_node: Node2D, location_id: String, is_target: bool) -> void:
-	var rect = loc_node.get_node_or_null("ColorRect")
-	if rect:
-		if is_target:
-			rect.color = Color(0.2, 1.0, 0.3, 1.0)
-		else:
-			rect.color = Color(0.5, 0.5, 0.7, 1.0)
-	var label = loc_node.get_node_or_null("Label")
-	if label:
+	var btn = loc_node.get_node_or_null("ClickButton")
+	if btn:
 		var loc = GameState.locations_db.get(location_id)
-		label.text = loc.display_name if loc else location_id
+		var name_text = loc.display_name if loc else location_id
 		if is_target:
-			label.text += " [DELIVER HERE]"
+			btn.text = name_text + "\n[DELIVER HERE]"
+			btn.modulate = Color(0.3, 1.0, 0.4, 1.0)
+		else:
+			btn.text = name_text
+			btn.modulate = Color(0.7, 0.7, 0.9, 1.0)
 
 
-func _on_location_clicked(location_id: String, event: InputEvent) -> void:
+func _on_location_button_pressed(location_id: String) -> void:
 	if _delivery_completed:
 		return
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_move_to_location(location_id)
+	_move_to_location(location_id)
 
 
 func _move_to_location(location_id: String) -> void:
