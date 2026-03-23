@@ -36,8 +36,12 @@ static func check_unlocks(day: int, reputation: int) -> void:
 
 
 static func init_new_game() -> void:
-	GameState.unlocked_flowers = STARTER_FLOWERS.duplicate()
+	GameState.unlocked_flowers.clear()
+	for f in STARTER_FLOWERS:
+		GameState.unlocked_flowers.append(f)
 	GameState.seed_inventory = STARTER_SEEDS.duplicate()
+	GameState.add_flower("daisy_yellow", 2)
+	GameState.add_flower("wildflower_yellow", 1)
 
 
 static func get_seed_shop_offerings() -> Array:
