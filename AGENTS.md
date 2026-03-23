@@ -12,7 +12,8 @@ This is a **Godot 4.6 game project** written in GDScript. There are no package m
 
 | Path | Purpose |
 |---|---|
-| `project.godot` | Godot project config; main scene is `scenes/main.tscn` |
+| `project.godot` | Godot project config; main scene is `scenes/menus/MainMenu.tscn` |
+| `autoload/` | Autoload singletons: GameState, SceneRouter, SaveManager, AudioManager |
 | `scenes/` | All game scenes (`.tscn` files) |
 | `scripts/` | All GDScript source files (`.gd` files) |
 | `addons/gdai-mcp-plugin-godot/` | GDAI MCP editor plugin (optional; binary not included — gracefully no-ops) |
@@ -47,7 +48,8 @@ This is a **Godot 4.6 game project** written in GDScript. There are no package m
 ### Linting / validation
 
 - GDScript syntax check: `godot --headless --check-only --script <file.gd>`
-- Validate all scripts: `for f in scripts/*.gd; do godot --headless --check-only --script "$f"; done`
+- Validate all scripts: `for f in autoload/*.gd scripts/*.gd scripts/**/*.gd; do godot --headless --check-only --script "$f"; done`
+- **Important:** `--check-only` runs each script in isolation without loading autoload singletons. Scripts that reference `GameState`, `SaveManager`, `SceneRouter`, etc. will report "Identifier not found" errors — these are false positives, not real bugs. The true validation is a successful `--import` or `--export-release`.
 
 ### Gotchas
 
