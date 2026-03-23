@@ -22,6 +22,8 @@ offset_left = 100.0
 offset_top = 100.0
 offset_right = 500.0
 offset_bottom = 140.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
 text = "~ Greenhouse ~"
 
 [node name="FlowerSpots" type="Node2D" parent="."]
@@ -55,6 +57,8 @@ offset_left = -70.0
 offset_top = 55.0
 offset_right = 70.0
 offset_bottom = 85.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
 horizontal_alignment = 1
 
 [node name="FlowerSpot02" type="Area2D" parent="FlowerSpots"]
@@ -86,6 +90,8 @@ offset_left = -70.0
 offset_top = 55.0
 offset_right = 70.0
 offset_bottom = 85.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
 horizontal_alignment = 1
 
 [node name="FlowerSpot03" type="Area2D" parent="FlowerSpots"]
@@ -117,6 +123,8 @@ offset_left = -70.0
 offset_top = 55.0
 offset_right = 70.0
 offset_bottom = 85.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
 horizontal_alignment = 1
 
 [node name="FlowerSpot04" type="Area2D" parent="FlowerSpots"]
@@ -148,6 +156,8 @@ offset_left = -70.0
 offset_top = 55.0
 offset_right = 70.0
 offset_bottom = 85.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
 horizontal_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -182,6 +192,12 @@ text = "Greenhouse - Day 1"
 layout_mode = 2
 text = "Inventory: (empty)
 Click flowers to collect them!"
+
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "Coins: 0"
 
 [node name="GoToShopButton" type="Button" parent="CanvasLayer/UI"]
 layout_mode = 2
