@@ -4,6 +4,7 @@ extends Node2D
 @onready var _destination_label: Label = $CanvasLayer/UI/DestinationLabel
 @onready var _status_label: Label = $CanvasLayer/UI/StatusLabel
 @onready var _bed_hub_button: Button = $CanvasLayer/UI/BedHubButton
+@onready var _money_label: Label = $CanvasLayer/UI/MoneyLabel
 @onready var _locations_node: Node2D = $Locations
 
 var _delivery_completed: bool = false
@@ -16,6 +17,7 @@ func _ready() -> void:
 	_create_player_marker_visual()
 	_setup_locations()
 	_update_destination_display()
+	_update_money_display()
 	_player_marker.position = Vector2(1000, 640)
 
 
@@ -29,6 +31,8 @@ func _create_player_marker_visual() -> void:
 	marker_label.text = "YOU"
 	marker_label.position = Vector2(-20, -35)
 	marker_label.add_theme_font_size_override("font_size", 14)
+	marker_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	marker_label.add_theme_constant_override("outline_size", 2)
 	_player_marker.add_child(marker_label)
 
 
@@ -88,7 +92,9 @@ func _move_to_location(location_id: String) -> void:
 func _complete_delivery() -> void:
 	_delivery_completed = true
 	var order = GameState.orders_db.get(GameState.current_order_id)
+	var earned := 0
 	if order:
+		earned = order.reward_money
 		GameState.money += order.reward_money
 		GameState.reputation += order.reward_reputation
 		GameState.money_changed.emit()
@@ -96,9 +102,10 @@ func _complete_delivery() -> void:
 	GameState.clear_current_order()
 	GameState.clear_current_bouquet()
 	GameState.clear_delivery_target()
-	_status_label.text = "Delivery complete! Great job!"
+	_status_label.text = "Delivery complete! +%d coins earned!" % earned
 	_destination_label.text = ""
 	_bed_hub_button.visible = true
+	_update_money_display()
 	for lid in _location_nodes:
 		_style_location_node(_location_nodes[lid], lid, false)
 
@@ -112,6 +119,10 @@ func _update_destination_display() -> void:
 	else:
 		_destination_label.text = "No active delivery."
 		_status_label.text = ""
+
+
+func _update_money_display() -> void:
+	_money_label.text = "Coins: %d" % GameState.money
 
 
 func _on_go_to_bed_hub() -> void:

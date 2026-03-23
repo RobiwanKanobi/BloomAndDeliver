@@ -10,6 +10,8 @@ extends Control
 @onready var _clear_button: Button = $BottomRow/ClearButton
 @onready var _town_map_button: Button = $BottomRow/TownMapButton
 @onready var _back_button: Button = $BottomRow/BackButton
+@onready var _reward_label: Label = $MainLayout/LeftColumn/RewardLabel
+@onready var _money_label: Label = $MoneyLabel
 
 var _current_order: OrderData
 var _bouquet_slots: Array[String] = []
@@ -27,7 +29,9 @@ func _ready() -> void:
 	_refresh_inventory_list()
 	_refresh_bouquet_display()
 	_validate_bouquet()
+	_update_money_display()
 	GameState.inventory_changed.connect(_refresh_inventory_list)
+	GameState.money_changed.connect(_update_money_display)
 
 
 func _load_order() -> void:
@@ -42,12 +46,14 @@ func _load_order() -> void:
 		var customer = GameState.customers_db.get(_current_order.customer_id)
 		_customer_name_label.text = customer.display_name if customer else _current_order.customer_id
 		_order_text_label.text = _current_order.request_text
+		_reward_label.text = "Reward: %d coins" % _current_order.reward_money
 		var portrait_path := "res://assets/art/characters/%s_portrait.png" % _current_order.customer_id
 		if ResourceLoader.exists(portrait_path):
 			_customer_portrait.texture = load(portrait_path)
 	else:
 		_customer_name_label.text = "No customer"
 		_order_text_label.text = "No orders available."
+		_reward_label.text = ""
 
 
 func _refresh_inventory_list() -> void:
@@ -182,6 +188,10 @@ func _on_clear_bouquet() -> void:
 
 func _on_go_to_town_map() -> void:
 	SceneRouter.go_to_town_map()
+
+
+func _update_money_display() -> void:
+	_money_label.text = "Coins: %d" % GameState.money
 
 
 func _on_back_to_greenhouse() -> void:

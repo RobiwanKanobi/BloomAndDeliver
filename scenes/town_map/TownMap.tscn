@@ -18,6 +18,8 @@ offset_left = 20.0
 offset_top = 10.0
 offset_right = 400.0
 offset_bottom = 40.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
 text = "~ Town Map ~"
 
 [node name="Locations" type="Node2D" parent="."]
@@ -102,6 +104,12 @@ text = "Deliver to: ..."
 layout_mode = 2
 text = "Click the highlighted location."
 autowrap_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "Coins: 0"
 
 [node name="BedHubButton" type="Button" parent="CanvasLayer/UI"]
 layout_mode = 2

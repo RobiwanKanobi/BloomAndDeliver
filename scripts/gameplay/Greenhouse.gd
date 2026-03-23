@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var _inventory_label: Label = $CanvasLayer/UI/InventoryLabel
+@onready var _money_label: Label = $CanvasLayer/UI/MoneyLabel
 @onready var _go_to_shop_button: Button = $CanvasLayer/UI/GoToShopButton
 @onready var _title_label: Label = $CanvasLayer/UI/TitleLabel
 
@@ -13,6 +14,7 @@ func _ready() -> void:
 		if spot.has_signal("flower_collected"):
 			spot.flower_collected.connect(_on_flower_collected)
 	_title_label.text = "Greenhouse - Day %d" % GameState.current_day
+	_update_money_display()
 	_refresh_ui()
 
 
@@ -32,6 +34,10 @@ func _refresh_ui() -> void:
 			text += "  %s x%d\n" % [name_str, item.quantity]
 		_inventory_label.text = text
 	_go_to_shop_button.disabled = inv.size() == 0
+
+
+func _update_money_display() -> void:
+	_money_label.text = "Coins: %d" % GameState.money
 
 
 func _on_go_to_shop() -> void:
