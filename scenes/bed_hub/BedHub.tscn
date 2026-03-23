@@ -30,10 +30,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -270.0
-offset_right = 320.0
-offset_bottom = 270.0
+offset_left = -350.0
+offset_top = -300.0
+offset_right = 350.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5)
@@ -45,13 +45,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -250.0
-offset_right = 300.0
-offset_bottom = 250.0
+offset_left = -330.0
+offset_top = -280.0
+offset_right = 330.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 15
 
 [node name="TitleLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -73,14 +73,19 @@ vertical_alignment = 1
 [node name="ButtonRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 alignment = 1
-theme_override_constants/separation = 30
+theme_override_constants/separation = 20
+
+[node name="UpgradesButton" type="Button" parent="VBoxContainer/ButtonRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 50)
+text = "Upgrades"
 
 [node name="EndDayButton" type="Button" parent="VBoxContainer/ButtonRow"]
 layout_mode = 2
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(160, 50)
 text = "Save & End Day"
 
 [node name="ContinueButton" type="Button" parent="VBoxContainer/ButtonRow"]
 layout_mode = 2
-custom_minimum_size = Vector2(200, 50)
-text = "Continue to Next Day"
+custom_minimum_size = Vector2(160, 50)
+text = "Next Day"

@@ -69,6 +69,33 @@ offset_right = 120.0
 offset_bottom = 80.0
 text = "Home"
 
+[node name="Library" type="Node2D" parent="Locations"]
+position = Vector2(300, 600)
+metadata/location_id = "library"
+
+[node name="ClickButton" type="Button" parent="Locations/Library"]
+offset_right = 120.0
+offset_bottom = 80.0
+text = "Library"
+
+[node name="LakesideDock" type="Node2D" parent="Locations"]
+position = Vector2(1500, 700)
+metadata/location_id = "lakeside_dock"
+
+[node name="ClickButton" type="Button" parent="Locations/LakesideDock"]
+offset_right = 120.0
+offset_bottom = 80.0
+text = "Lakeside Dock"
+
+[node name="Bakery" type="Node2D" parent="Locations"]
+position = Vector2(500, 200)
+metadata/location_id = "bakery"
+
+[node name="ClickButton" type="Button" parent="Locations/Bakery"]
+offset_right = 120.0
+offset_bottom = 80.0
+text = "Bakery"
+
 [node name="PlayerMarker" type="Sprite2D" parent="."]
 position = Vector2(920, 540)
 
@@ -81,7 +108,7 @@ anchor_right = 1.0
 offset_left = -360.0
 offset_top = 10.0
 offset_right = -10.0
-offset_bottom = 250.0
+offset_bottom = 300.0
 grow_horizontal = 0
 color = Color(0, 0, 0, 0.55)
 
@@ -92,7 +119,7 @@ anchor_right = 1.0
 offset_left = -350.0
 offset_top = 20.0
 offset_right = -20.0
-offset_bottom = 240.0
+offset_bottom = 290.0
 grow_horizontal = 0
 theme_override_constants/separation = 15
 

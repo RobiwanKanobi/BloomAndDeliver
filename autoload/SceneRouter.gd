@@ -6,6 +6,7 @@ const SCENES := {
 	"shop_counter": "res://scenes/shop_counter/ShopCounter.tscn",
 	"town_map": "res://scenes/town_map/TownMap.tscn",
 	"bed_hub": "res://scenes/bed_hub/BedHub.tscn",
+	"upgrades": "res://scenes/upgrades/UpgradeScreen.tscn",
 }
 
 var _fade_layer: CanvasLayer
@@ -44,6 +45,10 @@ func go_to_town_map() -> void:
 
 func go_to_bed_hub() -> void:
 	_change_scene("bed_hub")
+
+
+func go_to_upgrades() -> void:
+	_change_scene("upgrades")
 
 
 func _change_scene(scene_key: String) -> void:
