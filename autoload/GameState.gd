@@ -111,6 +111,28 @@ func reset_for_new_day() -> void:
 func _generate_daily_orders() -> void:
 	daily_orders.clear()
 	orders_db.clear()
+
+	if current_day == 1:
+		var first_order := OrderData.new()
+		first_order.id = "day1_intro"
+		first_order.customer_id = "red_fox"
+		first_order.request_text = "Welcome! I need a cheerful bouquet with at least one yellow flower and one daisy."
+		var req_a := OrderRequirementData.new()
+		req_a.requirement_type = "ColorTag"
+		req_a.target_value = "Yellow"
+		req_a.amount = 1
+		var req_b := OrderRequirementData.new()
+		req_b.requirement_type = "FlowerType"
+		req_b.target_value = "Daisy"
+		req_b.amount = 1
+		first_order.requirements = [req_a, req_b]
+		first_order.reward_money = 30
+		first_order.reward_reputation = 1
+		first_order.destination_location_id = "fox_house"
+		daily_orders.append(first_order)
+		orders_db[first_order.id] = first_order
+		return
+
 	var new_orders = OrderSystem.generate_daily_orders(current_day, reputation)
 	for o in new_orders:
 		daily_orders.append(o)
