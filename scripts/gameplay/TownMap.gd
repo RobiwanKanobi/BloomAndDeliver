@@ -131,6 +131,11 @@ func _complete_delivery() -> void:
 	var next = GameState.get_next_order()
 	if next:
 		_status_label.text += "\nMore orders waiting at the shop!"
+		var back_btn := Button.new()
+		back_btn.text = "Back to Shop"
+		back_btn.custom_minimum_size = Vector2(200, 50)
+		back_btn.pressed.connect(func(): SceneRouter.go_to_shop_counter())
+		$CanvasLayer/UI.add_child(back_btn)
 
 
 func _update_destination_display() -> void:

@@ -79,3 +79,8 @@ theme_override_constants/separation = 4
 layout_mode = 2
 custom_minimum_size = Vector2(200, 50)
 text = "Go to Shop"
+
+[node name="GoToBedButton" type="Button" parent="CanvasLayer/UI"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 50)
+text = "End Day"

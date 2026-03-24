@@ -6,6 +6,7 @@ extends Node2D
 @onready var _title_label: Label = $CanvasLayer/UI/TitleLabel
 @onready var _seed_shop_button: Button = $CanvasLayer/UI/SeedShopButton
 @onready var _slots_container: VBoxContainer = $CanvasLayer/UI/SlotsContainer
+@onready var _go_to_bed_button: Button = $CanvasLayer/UI/GoToBedButton
 
 var _seed_shop_open: bool = false
 var _seed_shop_panel: Control
@@ -13,6 +14,7 @@ var _seed_shop_panel: Control
 
 func _ready() -> void:
 	_go_to_shop_button.pressed.connect(_on_go_to_shop)
+	_go_to_bed_button.pressed.connect(_on_go_to_bed)
 	_seed_shop_button.pressed.connect(_toggle_seed_shop)
 	GameState.inventory_changed.connect(_refresh_ui)
 	_title_label.text = "Greenhouse - Day %d (Phase %d)" % [GameState.current_day, GameState.get_game_phase()]
@@ -166,10 +168,14 @@ func _refresh_ui() -> void:
 			var name_str = flower.display_name if flower else item.id
 			text += "  %s x%d\n" % [name_str, item.quantity]
 		_inventory_label.text = text
-	_go_to_shop_button.disabled = inv.size() == 0
+	_go_to_shop_button.disabled = false
 	_money_label.text = "Coins: %d" % GameState.money
 	_refresh_slots()
 
 
 func _on_go_to_shop() -> void:
 	SceneRouter.go_to_shop_counter()
+
+
+func _on_go_to_bed() -> void:
+	SceneRouter.go_to_bed_hub()
