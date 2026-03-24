@@ -3,6 +3,7 @@ extends Control
 @onready var _customer_portrait: TextureRect = $MainLayout/LeftColumn/CustomerPortrait
 @onready var _customer_name_label: Label = $MainLayout/LeftColumn/CustomerNameLabel
 @onready var _order_text_label: Label = $MainLayout/LeftColumn/OrderTextLabel
+@onready var _reward_label: Label = $MainLayout/LeftColumn/RewardLabel
 @onready var _bouquet_container: HBoxContainer = $MainLayout/CenterColumn/BouquetSlots
 @onready var _inventory_container: VBoxContainer = $MainLayout/RightColumn/ScrollContainer/InventoryList
 @onready var _feedback_label: Label = $BottomRow/FeedbackLabel
@@ -10,12 +11,10 @@ extends Control
 @onready var _clear_button: Button = $BottomRow/ClearButton
 @onready var _town_map_button: Button = $BottomRow/TownMapButton
 @onready var _back_button: Button = $BottomRow/BackButton
-@onready var _reward_label: Label = $MainLayout/LeftColumn/RewardLabel
 @onready var _money_label: Label = $MoneyLabel
 
 var _current_order: OrderData
 var _bouquet_slots: Array[String] = []
-const MAX_BOUQUET_SLOTS := 5
 var _delivery_ready: bool = false
 
 
@@ -38,22 +37,28 @@ func _load_order() -> void:
 	if GameState.current_order_id != "" and GameState.orders_db.has(GameState.current_order_id):
 		_current_order = GameState.orders_db[GameState.current_order_id]
 	else:
-		var order_id := GameState.get_next_demo_order_id()
-		GameState.set_current_order(order_id)
-		_current_order = GameState.orders_db.get(order_id)
+		var next_order = GameState.get_next_order()
+		if next_order:
+			GameState.set_current_order(next_order.id)
+			_current_order = next_order
+		else:
+			_current_order = null
 
 	if _current_order:
-		var customer = GameState.customers_db.get(_current_order.customer_id)
+		var customer = ContentDB.get_customer(_current_order.customer_id)
 		_customer_name_label.text = customer.display_name if customer else _current_order.customer_id
 		_order_text_label.text = _current_order.request_text
 		_reward_label.text = "Reward: %d coins" % _current_order.reward_money
 		var portrait_path := "res://assets/art/characters/%s_portrait.png" % _current_order.customer_id
 		if ResourceLoader.exists(portrait_path):
 			_customer_portrait.texture = load(portrait_path)
+		else:
+			_customer_portrait.texture = null
 	else:
 		_customer_name_label.text = "No customer"
-		_order_text_label.text = "No orders available."
+		_order_text_label.text = "No more orders today."
 		_reward_label.text = ""
+		_customer_portrait.texture = null
 
 
 func _refresh_inventory_list() -> void:
@@ -66,7 +71,7 @@ func _refresh_inventory_list() -> void:
 		if available <= 0:
 			continue
 		var btn := Button.new()
-		var flower = GameState.flowers_db.get(item.id)
+		var flower = ContentDB.get_flower(item.id)
 		var name_str = flower.display_name if flower else item.id
 		btn.text = "%s (x%d)" % [name_str, available]
 		btn.custom_minimum_size = Vector2(200, 40)
@@ -86,7 +91,8 @@ func _count_in_bouquet(flower_id: String) -> int:
 func _add_to_bouquet(flower_id: String) -> void:
 	if _delivery_ready:
 		return
-	if _bouquet_slots.size() >= MAX_BOUQUET_SLOTS:
+	var max_slots := GameState.get_max_bouquet_slots()
+	if _bouquet_slots.size() >= max_slots:
 		_feedback_label.text = "Bouquet is full!"
 		return
 	var available = GameState.get_flower_quantity(flower_id) - _count_in_bouquet(flower_id)
@@ -113,11 +119,12 @@ func _refresh_bouquet_display() -> void:
 	for child in _bouquet_container.get_children():
 		child.queue_free()
 
-	for i in range(MAX_BOUQUET_SLOTS):
+	var max_slots := GameState.get_max_bouquet_slots()
+	for i in range(max_slots):
 		var slot := Button.new()
-		slot.custom_minimum_size = Vector2(120, 120)
+		slot.custom_minimum_size = Vector2(100, 100)
 		if i < _bouquet_slots.size():
-			var flower = GameState.flowers_db.get(_bouquet_slots[i])
+			var flower = ContentDB.get_flower(_bouquet_slots[i])
 			slot.text = flower.display_name if flower else _bouquet_slots[i]
 			var idx = i
 			slot.pressed.connect(func(): _remove_from_bouquet(idx))
@@ -142,7 +149,7 @@ func _validate_bouquet() -> bool:
 	for req in _current_order.requirements:
 		var count := 0
 		for flower_id in _bouquet_slots:
-			var flower = GameState.flowers_db.get(flower_id)
+			var flower = ContentDB.get_flower(flower_id)
 			if not flower:
 				continue
 			if req.requirement_type == "ColorTag" and flower.color_tag == req.target_value:
@@ -174,7 +181,7 @@ func _on_confirm() -> void:
 	_clear_button.disabled = true
 	_back_button.disabled = true
 	_town_map_button.visible = true
-	var loc = GameState.locations_db.get(_current_order.destination_location_id)
+	var loc = ContentDB.get_location(_current_order.destination_location_id)
 	var dest_name = loc.display_name if loc else _current_order.destination_location_id
 	_feedback_label.text = "Bouquet confirmed! Deliver to: %s" % dest_name
 
@@ -186,12 +193,12 @@ func _on_clear_bouquet() -> void:
 	_validate_bouquet()
 
 
-func _on_go_to_town_map() -> void:
-	SceneRouter.go_to_town_map()
-
-
 func _update_money_display() -> void:
 	_money_label.text = "Coins: %d" % GameState.money
+
+
+func _on_go_to_town_map() -> void:
+	SceneRouter.go_to_town_map()
 
 
 func _on_back_to_greenhouse() -> void:
